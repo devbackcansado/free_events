@@ -1,0 +1,61 @@
+@base_url = http://localhost:8000/api/v1/accounts
+
+@token = ftg2o5n64wjjxmk1plh9q9ips9exg0la
+#------------------ Account ------------------
+
+### Login
+POST {{base_url}}/login/
+Content-Type: application/json
+
+{
+    "email": "aa@aa.com",
+    "password": "p"
+}
+
+
+### Me
+GET {{base_url}}/me/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+### Update
+PUT {{base_url}}/update/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+   // "first_name": "supra ",
+    "last_name": "supra last"
+
+}
+
+
+### Logout
+POST {{base_url}}/logout/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+### Register
+POST {{base_url}}/create/
+Content-Type: application/json
+
+{
+    "first_name": "João Silva",
+    "last_name": "Santos",
+    "email": "bb@bb.com",
+    "password1": "procurandonemo",
+    "password2": "procurandonemo"
+}
+
+
+### Delete User
+DELETE {{base_url}}/delete/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+# ------------------ End Account ------------------
+
+
+

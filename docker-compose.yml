@@ -1,0 +1,102 @@
+version: "3.9"
+
+volumes:
+  demo_local_redis_data: {}
+  demo_local_postgres_data: {}
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/Dockerfile-Postgres
+    container_name: demo_local_postgres
+    volumes:
+      - demo_local_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    env_file:
+      - ./src/core/.env
+    networks:
+      - dev-network
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/Dockerfile-Django
+    image: demo_local_django
+    container_name: demo_local_django
+    volumes:
+      - .:/app:z
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./src/core/.env
+    # command: ./src/core/start-django
+    networks:
+      - dev-network
+  redis:
+    image: docker.io/redis:6
+    container_name: demo_local_redis
+    volumes:
+      - demo_local_redis_data:/data
+    ports:
+      - "6470:6379"
+    networks:
+      - dev-network
+
+  celeryworker:
+    build:
+      context: .
+      dockerfile: ./compose/Dockerfile-Celery
+    image: demo_local_celeryworker
+    container_name: demo_local_celeryworker
+    depends_on:
+      - redis
+    # volumes:
+    #   - .:/app:z
+    ports: []
+    env_file:
+      - ./src/core/.env
+    command: ./src/core/start-celeryworker
+    networks:
+      - dev-network
+    # command: ["celery", "-A", "core.celery_app", "worker", "-l", "info"]
+
+  celerybeat:
+    build:
+      context: .
+      dockerfile: ./compose/Dockerfile-Beat
+    image: demo_local_celerybeat
+    container_name: demo_local_celerybeat
+    # volumes:
+    #   - .:/app:z
+    ports: []
+    env_file:
+      - ./src/core/.env
+    command: ./src/core/start-celerybeat
+    networks:
+      - dev-network
+    depends_on:
+      - redis
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./compose/Dockerfile-Flower
+    image: demo_local_flower
+    container_name: demo_local_flower
+    # volumes:
+    #   - .:/app:z
+    env_file:
+      - ./src/core/.env
+    ports:
+      - "5555:5555"
+    command: ./src/core/start-flower
+    networks:
+      - dev-network
+    depends_on:
+      - redis
+
+networks:
+  # Create a new Docker network.
+  dev-network:
+    driver: bridge

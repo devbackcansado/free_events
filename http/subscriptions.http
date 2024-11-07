@@ -1,0 +1,49 @@
+@base_url = http://localhost:8000/api/v1/subscriptions
+
+@token = 4s252imwfc4r7ydkooiuknczpuqfnh7m
+
+@event_uid = 101dc542-6115-4ce9-b113-514411b7dc93
+
+@subscription_uid = 1efe9a37-3b55-4757-8437-5197bf090671
+
+#------------------ Subscriptions ------------------
+
+### List
+GET {{base_url}}/list/
+    ?page=1
+    &limit=10
+    # &search=Abc
+    # &start_at=2025-06-24
+    # &order_by=start_at
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+### Create
+POST {{base_url}}/create/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "event_uid": "{{event_uid}}"
+}
+
+
+### Detail
+GET {{base_url}}/{{subscription_uid}}/detail/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+### Unsigned
+GET {{base_url}}/{{subscription_uid}}/unsigned/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+
+
+# ------------------ End Subscription ------------------
+
+
+

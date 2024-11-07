@@ -1,0 +1,17 @@
+@base_url = http://localhost:8000/api/v1/dashboards
+
+@token = 4s252imwfc4r7ydkooiuknczpuqfnh7m
+
+#------------------ Events ------------------
+
+### Dash
+GET {{base_url}}/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+
+# ------------------ End Events ------------------
+
+
+

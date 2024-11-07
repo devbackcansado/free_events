@@ -1,0 +1,60 @@
+@base_url = http://localhost:8000/api/v1/events
+
+@token = vq7d762tp8vlsbeotng1zy3fpiy9ttcs
+
+#------------------ Events ------------------
+
+### List Events
+GET {{base_url}}/list/
+    ?page=1
+    &limit=1
+    # &search=Abc
+    # &start_at=2025-06-24
+    # &order_by=start_at
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+### Register
+POST {{base_url}}/create/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "São João ",
+    "description": "O Melhor São João do Brasil",
+    "start_at": "2025-06-24T00:00:00",
+    "address": "rua 1"
+}
+
+
+### Detail
+GET {{base_url}}/101dc542-6115-4ce9-b113-514411b7dc93/detail/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+### Update
+PUT {{base_url}}/101dc542-6115-4ce9-b113-514411b7dc93/update/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+   //"title": "Updated Event",
+   // "description": "This is an updated event",
+    //"start_at": "2025-01-01T12:00:00",
+   // "address": "123 Main St",
+    "is_active": false
+
+}
+
+
+### Delete
+DELETE {{base_url}}/101dc542-6115-4ce9-b113-514411b7dc93/delete/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+# ------------------ End Events ------------------
+
+
+

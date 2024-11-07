@@ -1,0 +1,9 @@
+-r base.txt
+
+# Code quality
+# ------------------------------------------------------------------------------
+ruff==0.7.1  # https://github.com/astral-sh/ruff
+pre-commit==4.0.1  # https://github.com/pre-commit/pre-commit
+
+
+
